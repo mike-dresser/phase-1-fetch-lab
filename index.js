@@ -1,6 +1,17 @@
 function fetchBooks() {
   // To pass the tests, don't forget to return your fetch!
-  
+  return fetch('https://anapioficeandfire.com/api/books')
+    .then(response => response.json())
+    .then(data => {
+      renderBooks(data);
+      calculatePages(data);
+    });
+}
+
+function fetchCharacter(number) {
+  fetch(`https://anapioficeandfire.com/api/characters/${number}`)
+    .then(response => response.json())
+    .then(data => console.log(data));
 }
 
 function renderBooks(books) {
@@ -12,6 +23,15 @@ function renderBooks(books) {
   });
 }
 
+function calculatePages(books) {
+  let totalPages = 0;
+  for (let book of books) {
+    totalPages += book.numberOfPages;
+    console.log(`number of pages total: ${totalPages}`);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   fetchBooks();
+  fetchCharacter(1031);
 });
